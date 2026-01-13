@@ -1,0 +1,29 @@
+<div class="overflow-x-auto">
+  <table class="min-w-full border border-gray-300">
+    <thead class="bg-gray-100">
+    <tr>
+      <th class="px-4 py-2 border">Name</th>
+      <th class="px-4 py-2 border">Surname</th>
+      <th class="px-4 py-2 border">Email</th>
+      <th class="px-4 py-2 border">Phone</th>
+      <th class="px-4 py-2 border">Category</th>
+      <th class="px-4 py-2 border">Last update</th>
+      <th class="px-4 py-2 border">Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @contacts.each_with_index do |contact, index| %>
+      <%= render Contacts::Index::RowComponent.new(contact:, index:) %>
+    <% end %>
+
+    <% if @contacts.empty? %>
+      <tr>
+        <td colspan="7" class="px-4 py-6 text-center text-gray-500">
+          There is no contacts to show
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

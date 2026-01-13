@@ -1,0 +1,38 @@
+<%= form_with model: @contact, local: true do |f| %>
+  <div class="mb-4 text-red-600">
+    <%= @contact.errors.full_messages.join(",<br>").html_safe if @contact.errors.any? %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :name, "Name" %>
+    <%= f.text_field :name, class: "w-full px-3 py-2 border" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :surname, "Surname" %>
+    <%= f.text_field :surname, class: "w-full px-3 py-2 border" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :email, "Email" %>
+    <%= f.email_field :email, class: "w-full px-3 py-2 border" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :phone, "Phone" %>
+    <%= f.telephone_field :phone, class: "w-full px-3 py-2 border" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :category, "Category" %>
+    <%= f.select :category,
+                 options_for_select([["Family", "family"], ["Friends", "friends"], ["Work", "work"]], @contact.category),
+                 {},
+                 class: "w-full px-3 py-2 border" %>
+  </div>
+
+  <div class="flex justify-between">
+    <%= f.submit "Save", class: "bg-blue-600 text-white px-4 py-2 hover:bg-blue-700" %>
+    <%= link_to "Cancel", contacts_path, class: "bg-gray-300 px-4 py-2 hover:bg-gray-400" %>
+  </div>
+<% end %>
