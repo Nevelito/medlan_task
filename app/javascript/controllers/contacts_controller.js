@@ -12,6 +12,6 @@ export default class extends Controller {
     }
 
     updateCount() {
-        this.countTarget.textContent = this.listTarget.querySelectorAll("tbody tr:not(:has(td[colspan]))").length
+        this.countTarget.textContent = this.listTarget.querySelectorAll(".contact-row").length
     }
 }
