@@ -1,12 +1,23 @@
 <div class="max-w-6xl mx-auto p-6">
-  <div class="flex justify-between">
-    <div class="text-2xl font-bold mb-4">Contacts list</div>
-    <div>
+  <div class="flex justify-between mb-2">
+    <div class="text-2xl font-bold">Contacts list</div>
+
+    <div class="flex items-center gap-4">
+      <%= form_with url: contacts_path, method: :get, data: { turbo_frame: "contacts_table" } do |f| %>
+        <%= f.select :category,
+                     Contact.categories.keys.map { |k| [k.humanize, k] },
+                     { include_blank: "All categories" },
+                     { class: "px-3 py-2 border",
+                       onchange: "this.form.requestSubmit()" } %>
+      <% end %>
+
       <%= link_to "Add contact",
                   new_contact_path,
                   class: "bg-blue-600 text-white px-4 py-2 hover:bg-blue-700" %>
     </div>
   </div>
 
-  <%= render Contacts::Index::TableComponent.new(contacts: @contacts) %>
+  <%= turbo_frame_tag "contacts_table" do %>
+    <%= render Contacts::Index::TableComponent.new(contacts: @contacts) %>
+  <% end %>
 </div>

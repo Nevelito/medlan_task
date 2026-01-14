@@ -8,6 +8,8 @@ class Contact < ApplicationRecord
     message: "has to include exact 9 numbers"
   }
 
+  scope :by_category, ->(category) { where(category: category) if category.present? }
+
   enum :category, { family: 0, friends: 1, work: 2 }
 
   private

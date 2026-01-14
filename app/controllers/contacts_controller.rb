@@ -2,7 +2,7 @@ class ContactsController < ApplicationController
   before_action :set_contact, only: %i[edit update destroy]
 
   def index
-    @contacts = Contact.all
+    @contacts = Contact.all.by_category(params[:category]).order(:name)
   end
 
   def new
