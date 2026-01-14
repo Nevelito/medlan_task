@@ -63,4 +63,13 @@ RSpec.describe "Contacts management", type: :system, js: true do
       expect(page).not_to have_text("Messi")
     end
   end
+
+  it "counts number of contacts correctly" do
+    visit contacts_path
+    expect(page).to have_text("Contacts list: 1")
+
+    click_button "Delete"
+
+    expect(page).to have_text("Contacts list: 0")
+  end
 end
