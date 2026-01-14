@@ -10,6 +10,7 @@
   <td class="px-4 py-2 border whitespace-nowrap">
     <%= link_to "Edit",
                 edit_contact_path(@contact),
+                data: { turbo_frame: "_top" },
                 class: "text-yellow-600 hover:underline mr-2" %>
     <%= button_to "Delete",
                 contact_path(@contact),
