@@ -1,8 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "Contacts management", type: :system do
+RSpec.describe "Contacts management", type: :system, js: true do
   before do
-    driven_by(:rack_test)
     create(:contact, name: "Jane", surname: "Doe")
   end
 
@@ -21,7 +20,7 @@ RSpec.describe "Contacts management", type: :system do
     expect(page).to have_text("Jan")
     expect(page).to have_text("Kowalski")
     expect(page).to have_text("jan@test.com")
-    expect(page).to have_text("work")
+    expect(page).to have_text("Work")
   end
 
   it "updates an existing contact" do
@@ -36,5 +35,32 @@ RSpec.describe "Contacts management", type: :system do
 
     expect(page).to have_text("Simon")
     expect(page).not_to have_text("Jane")
+  end
+
+  context "check if filter select works correctly" do
+    before do
+      create(:contact, name: "ronaldo", category: "work")
+      create(:contact, name: "messi", category: "friends")
+    end
+    it "filters contacts by category" do
+      visit contacts_path
+      expect(page).to have_text("Ronaldo")
+      expect(page).to have_text("Messi")
+
+      find('select[name="category"]').select("Work")
+
+      expect(page).to have_text("Ronaldo")
+      expect(page).not_to have_text("Messi")
+
+      find('select[name="category"]').select("Friends")
+
+      expect(page).not_to have_text("Ronaldo")
+      expect(page).to have_text("Messi")
+
+      find('select[name="category"]').select("Family")
+
+      expect(page).not_to have_text("Ronaldo")
+      expect(page).not_to have_text("Messi")
+    end
   end
 end
