@@ -1,4 +1,6 @@
 <div class="max-w-6xl mx-auto p-6" data-controller="contacts">
+  <%= turbo_stream_from "contacts" %>
+
   <div class="flex justify-between mb-2">
     <div class="text-2xl font-bold">
       Contacts list:
@@ -20,7 +22,7 @@
     </div>
   </div>
 
-  <%= turbo_frame_tag "contacts_table", data: { contacts_target: "list", action: "turbo:frame-render->contacts#onFrameRender" } do %>
-    <%= render Contacts::Index::TableComponent.new(contacts: @contacts) %>
-  <% end %>
+  <div id="table_container">
+    <%= render "table", contacts: @contacts %>
+  </div>
 </div>

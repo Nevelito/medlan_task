@@ -1,4 +1,5 @@
 class Contact < ApplicationRecord
+  after_commit :broadcast_table_update
   before_validation :normalize_data
 
   validates :name, :surname, :email, :category, presence: true
@@ -22,5 +23,12 @@ class Contact < ApplicationRecord
 
   def normalize(value)
     value.to_s.strip.capitalize # to_s used in case value is nil
+  end
+
+  def broadcast_table_update
+    broadcast_replace_to "contacts",
+                         target: "contacts_table",
+                         partial: "contacts/table",
+                         locals: { contacts: Contact.all.order(:name) }
   end
 end

@@ -5,6 +5,8 @@ export default class extends Controller {
 
     connect() {
         this.updateCount()
+        this.observer = new MutationObserver(() => this.updateCount())
+        this.observer.observe(this.element, { childList: true, subtree: true })
     }
 
     onFrameRender() {
