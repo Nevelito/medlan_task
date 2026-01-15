@@ -45,4 +45,26 @@ RSpec.describe Contact, type: :model do
       expect(contact.errors[:email]).to include('has already been taken')
     end
   end
+
+  describe "broadcasting" do
+    include ActionCable::TestHelper
+
+    it "broadcasts a refresh signal after create" do
+      expect {
+        create(:contact)
+      }.to have_broadcasted_to("contacts").with { |data|
+        expect(data).to include("refresh_trigger")
+      }
+    end
+
+    it "broadcasts a row update after update" do
+      contact = create(:contact)
+
+      expect {
+        contact.update!(name: "Ronaldo")
+      }.to have_broadcasted_to("contacts").with { |data|
+        expect(data).to include("tr id=\"contact_#{contact.id}\"")
+      }
+    end
+  end
 end
