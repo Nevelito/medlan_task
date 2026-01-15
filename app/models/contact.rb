@@ -10,7 +10,7 @@ class Contact < ApplicationRecord
   validates :phone, format: {
     with: /\A\d{9}\z/,
     message: "has to include exact 9 numbers"
-  }
+  }, allow_blank: true
 
   scope :by_category, ->(category) { where(category: category) if category.present? }
 
