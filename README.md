@@ -13,19 +13,35 @@ Things you may want to cover:
   ```
   8.1.2
   ```
-
-* System dependencies
+* Database
+  ```
+  PosgreSQL
+  ```
 
 * Configuration
+  ```
+  git clone git@github.com:Nevelito/medlan_task.git
+  cd medlan_task
+  
+  bundle install
+  
+  rails db:create
+  rails db:migrate
+  
+  bin/dev  
+  ```
 
 * Database creation
+  ```
+  rails db:create
+  rails db:migrate
+  ```
 
-* Database initialization
+* Database initialization:
+  https://www.postgresql.org/download/linux/ubuntu/
+* Redis download: https://redis.io/docs/latest/operate/oss_and_stack/install/archive/install-redis/install-redis-on-linux/
+* How to run the test
+  ```
+  bundle exec rspec
+  ```
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
