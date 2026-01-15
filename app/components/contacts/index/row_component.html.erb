@@ -1,4 +1,4 @@
-<tr class="<%= @index.odd? ? 'bg-blue-200' : 'bg-white' %> contact-row">
+<tr id="<%= dom_id(@contact) %>" class="<%= @index.odd? ? 'bg-blue-200' : 'bg-white' %> <%= 'bg-yellow-200' if @index<0 %> contact-row">
   <td class="px-4 py-2 border"><%= @contact.name %></td>
   <td class="px-4 py-2 border"><%= @contact.surname %></td>
   <td class="px-4 py-2 border"><%= @contact.email %></td>

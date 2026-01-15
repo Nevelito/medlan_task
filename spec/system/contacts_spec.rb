@@ -72,4 +72,60 @@ RSpec.describe "Contacts management", type: :system, js: true do
 
     expect(page).to have_text("Contacts list: 0")
   end
+
+  it "shows a new contact in another window automatically" do
+    using_session(:joe) do
+      visit contacts_path
+      expect(page).to have_content("Contacts list:")
+    end
+
+    using_session(:salami) do
+      visit new_contact_path
+      fill_in "Name", with: "Messi"
+      fill_in "Surname", with: "Messi"
+      fill_in "Email", with: "messi@example.pl"
+      fill_in "Phone", with: "987654321"
+      select "Work", from: "Category"
+      click_on "Save"
+    end
+
+    using_session(:joe) do
+      expect(page).to have_content("Messi", wait: 5)
+    end
+  end
+
+  it "updates contact in another window automatically" do
+    using_session(:joe) do
+      visit contacts_path
+      expect(page).to have_content("Jane")
+    end
+
+    using_session(:salami) do
+      visit contacts_path
+      click_on "Edit"
+      fill_in "Name", with: "Ronaldo"
+      click_on "Save"
+    end
+
+    using_session(:joe) do
+      expect(page).to have_content("Ronaldo", wait: 5)
+      expect(page).not_to have_content("Jane")
+    end
+  end
+
+  it "deletes contact in another window automatically" do
+    using_session(:joe) do
+      visit contacts_path
+      expect(page).to have_content("Jane")
+    end
+
+    using_session(:salami) do
+      visit contacts_path
+      click_on "Delete"
+    end
+
+    using_session(:joe) do
+      expect(page).not_to have_content("Jane")
+    end
+  end
 end

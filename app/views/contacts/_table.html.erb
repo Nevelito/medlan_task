@@ -1,0 +1,3 @@
+<%= turbo_frame_tag "contacts_table", data: { contacts_target: "list" } do %>
+  <%= render Contacts::Index::TableComponent.new(contacts: contacts) %>
+<% end %>
